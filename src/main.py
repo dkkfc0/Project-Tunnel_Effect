@@ -355,6 +355,7 @@ def get_unique_filename(base_name, ext=".gif"):
     Если 'quantum_tunneling.gif' занят — пробует
     'quantum_tunneling (1).gif', 'quantum_tunneling (2).gif' и т.д.
     """
+    
     filename = f"{base_name}{ext}"
     if not os.path.exists(filename):
         return filename
@@ -406,3 +407,30 @@ save_params_to_json({
     "frame_step": frame_step,
     "output_file": output_file,
 }, json_file)
+
+# Сохранение выходных данных
+def save_npy_bundle(folder, base_name, **arrays):
+    """
+    Сохраняет каждый массив в отдельный .npy-файл в папке folder.
+    Имена файлов: <base_name>_<key>.npy
+    """
+    
+    os.makedirs(folder, exist_ok=True)
+    saved = []
+    for key, arr in arrays.items():
+        path = os.path.join(folder, f"{base_name}_{key}.npy")
+        np.save(path, arr)
+        saved.append(path)
+        print(f"  сохранено: {path}")
+    return saved
+
+stem = os.path.splitext(output_file)[0]
+print("Сохранение массивов в .npy...")
+save_npy_bundle(
+    folder="data",
+    base_name=stem,
+    x=x,
+    V=V,
+    times=times,
+    densities=densities,
+)
