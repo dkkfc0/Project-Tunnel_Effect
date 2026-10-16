@@ -347,27 +347,21 @@ animation = FuncAnimation(
 # 15. СОХРАНЕНИЕ GIF, JSON, npy
 
 
+os.makedirs("results", exist_ok=True)
+os.makedirs("data", exist_ok=True)
+
 base_name = "quantum_tunneling"
+extension = ".gif"
 
-def get_unique_filename(base_name, ext=".gif"):
-    """
-    Возвращает имя файла, которое ещё не существует.
-    Если 'quantum_tunneling.gif' занят — пробует
-    'quantum_tunneling (1).gif', 'quantum_tunneling (2).gif' и т.д.
-    """
-    
-    filename = f"{base_name}{ext}"
-    if not os.path.exists(filename):
-        return filename
+output_file = os.path.join("results", base_name + extension)
 
-    counter = 1
-    while True:
-        filename = f"{base_name} ({counter}){ext}"
-        if not os.path.exists(filename):
-            return filename
-        counter += 1
+counter = 1
+while os.path.exists(output_file):
+    output_file = os.path.join(
+        "results", f"{base_name} ({counter}){extension}"
+    )
+    counter += 1
 
-output_file = get_unique_filename(base_name, ext=".gif")
 print(f"Файл будет сохранён как: {output_file}")
 
 print(f"Сохранение в {output_file}...")
@@ -386,12 +380,14 @@ print("GIF успешно создан!")
 print(f"Файл: {output_file}")
 print("===================================")
 
+
 def save_params_to_json(params, filename="params.json"):
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(params, f, indent=4, ensure_ascii=False)
     print(f"Параметры сохранены в {filename}")
 
-json_file = os.path.splitext(output_file)[0] + ".json"
+stem = os.path.splitext(os.path.basename(output_file))[0]
+json_file = os.path.join("data", stem + ".json")
 
 save_params_to_json({
     "x_min": x_min,
@@ -408,13 +404,14 @@ save_params_to_json({
     "output_file": output_file,
 }, json_file)
 
+
 # Сохранение выходных данных
 def save_npy_bundle(folder, base_name, **arrays):
     """
     Сохраняет каждый массив в отдельный .npy-файл в папке folder.
     Имена файлов: <base_name>_<key>.npy
     """
-    
+
     os.makedirs(folder, exist_ok=True)
     saved = []
     for key, arr in arrays.items():
@@ -424,7 +421,6 @@ def save_npy_bundle(folder, base_name, **arrays):
         print(f"  сохранено: {path}")
     return saved
 
-stem = os.path.splitext(output_file)[0]
 print("Сохранение массивов в .npy...")
 save_npy_bundle(
     folder="data",
