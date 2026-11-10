@@ -12,12 +12,21 @@ class ResultsSaver:
     """Выбирает уникальное имя и сохраняет параметры и численные данные."""
 
     def __init__(self, results_dir="results", data_dir="data"):
+        """Создаёт каталоги для анимаций и численных результатов.
+        
+        Args:
+            results_dir: Папка для GIF-файлов.
+            data_dir: Папка для JSON и NPY
+        """
         self.results_dir = Path(results_dir)
         self.data_dir = Path(data_dir)
         self.results_dir.mkdir(parents=True, exist_ok=True)
         self.data_dir.mkdir(parents=True, exist_ok=True)
 
     def next_gif_path(self, base_name="quantum_tunneling"):
+        """
+        Подбирает свободное имя GIF без перезаписи старых файлов
+        """
         path = self.results_dir / f"{base_name}.gif"
         counter = 1
         while path.exists():
@@ -26,6 +35,11 @@ class ResultsSaver:
         return path
 
     def save_data(self, simulation: QuantumSimulation, output_file):
+        """
+        Сохраняет параметры в JSON, а вычисленные массивы в NPY
+        simulation: объект с рассчитанными данными.
+        output_file: путь к GIF; его имя используется для файлов данных.
+        """
         stem = Path(output_file).stem
         params = asdict(simulation.params)
         params["output_file"] = str(output_file)
