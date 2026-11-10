@@ -7,6 +7,10 @@ class ParameterInput:
 
     @staticmethod
     def get_number(prompt):
+        """
+        Запрашивает у пользователя вещественное число, 
+        принимает числа с десятичными разделителями "," и "."
+        """
         while True:
             try:
                 return float(input(prompt + " ").replace(",", "."))
@@ -15,6 +19,10 @@ class ParameterInput:
 
     @classmethod
     def read(cls):
+        """
+        Последовательно запрашивает параметры системы и
+        проверяет их на физческую корректность
+        """
         print("Задайте начальные условия системы")
         while True:
             x_min = cls.get_number("Координата минимума оси X:")
