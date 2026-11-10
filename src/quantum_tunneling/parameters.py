@@ -20,6 +20,11 @@ class SimulationParams:
     frame_step: int = 10
 
     def __post_init__(self):
+        """
+        Проверяет значения параметров после создания объекта.
+        
+        Исключения: ValueError: если введённые численные настройки недопустимы.
+        """
         if self.x_min >= self.x_max:
             raise ValueError("x_min должен быть меньше x_max")
         if self.mass <= 0:
