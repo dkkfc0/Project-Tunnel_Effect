@@ -10,6 +10,9 @@ class QuantumAnimator:
     """Отображает вероятность |psi|² и потенциальный барьер, создаёт GIF."""
 
     def __init__(self, simulation: QuantumSimulation):
+        """
+        Подготавливает визуализацию моделирования
+        """
         if simulation.densities is None:
             raise ValueError("Сначала вызовите simulation.run()")
         self.simulation = simulation
@@ -19,12 +22,18 @@ class QuantumAnimator:
         self.time_text = None
 
     def update(self, frame):
+        """
+        Обновляет плотность вероятности и время
+        """
         s = self.simulation
         self.line_density.set_ydata(s.densities[frame])
         self.time_text.set_text(f"t = {s.times[frame]:.2f}")
         return self.line_density, self.time_text
 
     def create(self):
+        """
+        Создаёт график плотности, барьера и объект GIF-анимации
+        """
         s = self.simulation
         p = s.params
         self.fig, ax = plt.subplots(figsize=(10, 5))
@@ -58,6 +67,9 @@ class QuantumAnimator:
         return self
 
     def save(self, output_file):
+        """
+        Сохранение .gif
+        """
         if self.animation is None:
             self.create()
         print(f"Сохранение GIF в {output_file}...")
