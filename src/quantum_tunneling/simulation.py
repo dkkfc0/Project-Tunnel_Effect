@@ -17,11 +17,20 @@ class QuantumSimulation:
         self.densities = None
 
     def potential(self, x):
-        """Прямоугольный барьер, расположенный симметрично относительно x=0."""
+        """
+        Создаёт прямоугольный барьер, расположенный симметрично относительно x=0
+        """
         p = self.params
         return np.where(np.abs(x) <= p.barrier_width / 2, p.V0, 0.0)
 
     def run(self):
+        """Вычисляет временную эволюцию гауссова волнового пакета.
+        
+        Создаёт сетку, гамильтониан и начальное состояние, решает
+        уравнение Шрёдингера, выбирает кадры и вычисляет плотности.
+        
+        Возвращает: QuantumSimulation: текущий объект с заполненными массивами
+        """
         p = self.params
         dof = wp.grid.PlaneWaveDof(p.x_min, p.x_max, p.N)
         self.grid = wp.grid.Grid(dof)
