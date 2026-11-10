@@ -5,6 +5,11 @@ from quantum_tunneling.input import ParameterInput
 
 
 def main():
+    """
+    Запрашивает параметры и запускает полный цикл моделирования
+    последовательно выполняет расчёт, анимацию
+    и сохранение результатов
+    """
     params = ParameterInput.read()
     app = QuantumTunnelingApp(params)
     app.run()
