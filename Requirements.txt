@@ -1,1 +1,4 @@
-
+matplotlib==3.11.2
+numpy==2.5.3
+pillow==12.3.0
+wavepacket==0.5
