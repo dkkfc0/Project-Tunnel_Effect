@@ -1,0 +1,15 @@
+{
+    "x_min": -10.0,
+    "x_max": 10.0,
+    "mass": 2.0,
+    "x0": -3.0,
+    "k0": 1.0,
+    "V0": 2.0,
+    "barrier_width": 1.0,
+    "N": 256,
+    "sigma": 0.8,
+    "dt": 0.01,
+    "num_steps": 1200,
+    "frame_step": 10,
+    "output_file": "results/quantum_tunneling (2).gif"
+}
