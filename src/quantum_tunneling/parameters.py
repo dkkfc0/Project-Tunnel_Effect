@@ -1,6 +1,7 @@
 """Параметры расчёта"""
 
 from dataclasses import dataclass
+from . import config
 
 @dataclass
 class SimulationParams:
@@ -13,11 +14,11 @@ class SimulationParams:
     k0: float
     V0: float
     barrier_width: float
-    N: int = 256
-    sigma: float = 0.8
-    dt: float = 0.01
-    num_steps: int = 1200
-    frame_step: int = 10
+    N: int = config.N
+    sigma: float = config.SIGMA
+    dt: float = config.DT
+    num_steps: int = config.NUM_STEPS
+    frame_step: int = config.FRAME_STEP
 
     def __post_init__(self):
         """
